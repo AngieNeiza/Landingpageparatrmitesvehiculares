@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Hero() {
   return (
@@ -24,13 +25,19 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-blue-950 px-8 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <Link
+                to="/solicitar-tramite"
+                className="bg-yellow-400 hover:bg-yellow-500 text-blue-950 px-8 py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
                 Solicitar trámite
                 <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg border-2 border-white/30 transition-all duration-300">
+              </Link>
+              <Link
+                to="/cotizar"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg border-2 border-white/30 transition-all duration-300"
+              >
                 Cotizar ahora
-              </button>
+              </Link>
             </div>
 
             <div className="flex items-center gap-8 pt-8 border-t border-white/20">
