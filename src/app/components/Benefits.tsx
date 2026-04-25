@@ -1,4 +1,9 @@
 import { Clock, HeadphonesIcon, Shield, MapPin } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/free-mode';
 
 const benefits = [
   {
@@ -23,9 +28,11 @@ const benefits = [
   },
 ];
 
+const duplicatedBenefits = [...benefits, ...benefits];
+
 export function Benefits() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-primary-gradient text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImRvdHMiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNkb3RzKSIvPjwvc3ZnPg==')] opacity-30"></div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -33,32 +40,44 @@ export function Benefits() {
           <h2 className="text-3xl md:text-4xl mb-4">
             ¿Por qué elegirnos?
           </h2>
-          <p className="text-lg text-blue-200 max-w-2xl mx-auto">
+          <p className="text-lg text-text-soft max-w-2xl mx-auto">
             Ventajas que hacen la diferencia en la gestión de tus trámites vehiculares
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {benefits.map((benefit, index) => {
+        <Swiper
+          modules={[Autoplay, FreeMode]}
+          spaceBetween={24}
+          slidesPerView="auto"
+          loop={true}
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          speed={4000}
+          freeMode={true}
+          className="benefits-swiper"
+        >
+          {duplicatedBenefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
-              <div
-                key={index}
-                className="bg-white/10 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group"
-              >
-                <div className="bg-yellow-400 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Icon className="w-7 h-7 text-blue-950" />
+              <SwiperSlide key={index} style={{ width: 'auto' }}>
+                <div className="bg-white/10 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group h-full min-w-[300px] md:min-w-[350px]">
+                  <div className="bg-accent w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-7 h-7 text-accent" />
+                  </div>
+                  <h3 className="text-xl mb-3">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-text-soft leading-relaxed">
+                    {benefit.description}
+                  </p>
                 </div>
-                <h3 className="text-xl mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-blue-200 leading-relaxed">
-                  {benefit.description}
-                </p>
-              </div>
+              </SwiperSlide>
             );
           })}
-        </div>
+        </Swiper>
       </div>
     </section>
   );

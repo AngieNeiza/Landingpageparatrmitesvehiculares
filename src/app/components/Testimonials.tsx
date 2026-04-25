@@ -29,7 +29,7 @@ export function Testimonials() {
     <section className="py-16 md:py-24 bg-gray-50" id="testimonios">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl text-blue-950 mb-4">
+          <h2 className="text-3xl md:text-4xl text-primary mb-4">
             Lo que dicen nuestros clientes
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -50,7 +50,7 @@ export function Testimonials() {
                   className="w-14 h-14 rounded-full object-cover"
                 />
                 <div>
-                  <h4 className="text-blue-950">
+                  <h4 className="text-primary">
                     {testimonial.name}
                   </h4>
                   <p className="text-sm text-gray-500">{testimonial.city}</p>
@@ -59,7 +59,7 @@ export function Testimonials() {
 
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="w-5 h-5 fill-secondary text-secondary" />
                 ))}
               </div>
 

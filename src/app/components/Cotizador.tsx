@@ -92,7 +92,7 @@ export function Cotizador() {
 
                     <Button
                       onClick={handleSolicitar}
-                      className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-950"
+                      className="w-full bg-gradient-to-r from-secondary to-primary hover:from-primary hover:to-secondary text-white"
                     >
                       Solicitar estos trámites
                     </Button>

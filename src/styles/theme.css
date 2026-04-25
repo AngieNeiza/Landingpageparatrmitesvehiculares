@@ -8,9 +8,12 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
+  --primary: #0F3D4C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1E6F8C;
+  --accent: #FACC15;
+  --text-light: #FFFFFF;
+  --text-soft: #CFE8F3;
   --secondary-foreground: #030213;
   --muted: #ececf0;
   --muted-foreground: #717182;
@@ -76,6 +79,43 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+}
+
+/* Custom color classes for the new theme */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, var(--primary), #155E75);
+}
+
+.bg-primary-dark {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-text-light {
+  color: var(--text-light);
+}
+
+.text-text-soft {
+  color: var(--text-soft);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--primary);
 }
 
 @theme inline {

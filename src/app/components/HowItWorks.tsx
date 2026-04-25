@@ -1,4 +1,4 @@
-import { ClipboardCheck, Upload, Settings, CheckCircle2 } from 'lucide-react';
+import { ClipboardCheck, Send, Settings, CheckCircle2 } from 'lucide-react';
 
 const steps = [
   {
@@ -9,9 +9,9 @@ const steps = [
   },
   {
     number: '02',
-    icon: Upload,
-    title: 'Sube tus documentos',
-    description: 'Envía la documentación requerida de forma segura a través de nuestros canales digitales.',
+    icon: Send,
+    title: 'Envío del formulario',
+    description: 'Completa el formulario con tus datos para iniciar el trámite',
   },
   {
     number: '03',
@@ -32,7 +32,7 @@ export function HowItWorks() {
     <section className="py-16 md:py-24 bg-white" id="como-funciona">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl text-blue-950 mb-4">
+          <h2 className="text-3xl md:text-4xl text-primary mb-4">
             ¿Cómo funciona?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -42,25 +42,25 @@ export function HowItWorks() {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Timeline line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-300 via-blue-500 to-green-400 transform -translate-y-1/2 z-0"></div>
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-primary to-accent transform -translate-y-1/2 z-0"></div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div key={index} className="relative">
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-blue-200 hover:border-blue-500 transition-all duration-300 h-full">
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-gray-200 hover:border-secondary transition-all duration-300 h-full">
                     <div className="flex flex-col items-center text-center">
                       <div className="relative mb-4">
-                        <div className="bg-gradient-to-br from-blue-700 to-blue-900 w-20 h-20 rounded-full flex items-center justify-center shadow-lg">
+                        <div className="bg-gradient-to-br from-primary to-secondary w-20 h-20 rounded-full flex items-center justify-center shadow-lg">
                           <Icon className="w-9 h-9 text-white" />
                         </div>
-                        <div className="absolute -top-2 -right-2 bg-yellow-400 text-blue-950 w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                        <div className="absolute -top-2 -right-2 bg-accent text-primary w-10 h-10 rounded-full flex items-center justify-center shadow-md">
                           <span className="text-sm">{step.number}</span>
                         </div>
                       </div>
 
-                      <h3 className="text-xl text-blue-950 mb-3">
+                      <h3 className="text-xl text-primary mb-3">
                         {step.title}
                       </h3>
 
@@ -72,7 +72,7 @@ export function HowItWorks() {
 
                   {index < steps.length - 1 && (
                     <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-400 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
                         <div className="w-3 h-3 bg-white rounded-full"></div>
                       </div>
                     </div>

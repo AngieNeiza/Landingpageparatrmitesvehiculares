@@ -7,6 +7,7 @@ import { Testimonials } from './components/Testimonials';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { FormularioTramite } from './components/FormularioTramite';
+import { ServicioDetalle } from './components/ServicioDetalle';
 import { Cotizador } from './components/Cotizador';
 
 function HomePage() {
@@ -28,6 +29,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/servicios/:servicio" element={<ServicioDetalle />} />
         <Route path="/solicitar-tramite" element={<FormularioTramite />} />
         <Route path="/cotizar" element={<Cotizador />} />
       </Routes>
