@@ -68,7 +68,7 @@ export function ListaTramites({ onSelectTramite }: ListaTramitesProps) {
                 onClick={() => onSelectTramite(tramite)}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
               >
-                Solicitar este trámite
+                Seleccionar
               </button>
             )}
           </CardContent>

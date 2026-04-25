@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -6,7 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
-// Error boundary component for Select
+interface FormularioTramiteProps {
+  embedded?: boolean;
+  initialTramite?: string;
+  initialPrecio?: string;
+  onSuccess?: () => void;
+}
+
 function SafeSelect({ children, fallback }: { children: React.ReactNode; fallback: React.ReactNode }) {
   try {
     return <>{children}</>;
@@ -16,52 +22,34 @@ function SafeSelect({ children, fallback }: { children: React.ReactNode; fallbac
   }
 }
 
-export function FormularioTramite({ embedded = false }: { embedded?: boolean }) {
+export function FormularioTramite({ embedded = false, initialTramite = '', initialPrecio = '', onSuccess }: FormularioTramiteProps) {
   const [formData, setFormData] = useState({
     nombre: '',
-    identificacion: '',
     telefono: '',
-    email: '',
     ciudad: '',
     tipoVehiculo: '',
-    tipoTramite: '',
-    comentarios: ''
+    comentarios: '',
+    tipoTramite: initialTramite,
+    precio: initialPrecio
   });
 
   const handleChange = (field: string, value: string) => {
-    try {
-      setFormData(prev => ({ ...prev, [field]: value || '' }));
-    } catch (error) {
-      console.error('Error updating form data:', error);
-    }
+    setFormData(prev => ({ ...prev, [field]: value || '' }));
   };
 
   const handleSelectChange = (field: string) => (value: string) => {
-    try {
-      handleChange(field, value);
-    } catch (error) {
-      console.error('Error updating select field:', error);
-    }
+    handleChange(field, value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.nombre.trim()) {
       alert('Por favor ingrese su nombre completo');
       return;
     }
-    if (!formData.identificacion.trim()) {
-      alert('Por favor ingrese su número de identificación');
-      return;
-    }
     if (!formData.telefono.trim()) {
       alert('Por favor ingrese su teléfono');
-      return;
-    }
-    if (!formData.email.trim()) {
-      alert('Por favor ingrese su correo electrónico');
       return;
     }
     if (!formData.ciudad.trim()) {
@@ -72,37 +60,22 @@ export function FormularioTramite({ embedded = false }: { embedded?: boolean }) 
       alert('Por favor seleccione el tipo de vehículo');
       return;
     }
-    if (!formData.tipoTramite) {
-      alert('Por favor seleccione el tipo de trámite');
-      return;
-    }
 
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('Solicitud enviada exitosamente');
+    console.log('Solicitud enviada:', formData);
+    alert('Solicitud enviada exitosamente. Nos contactaremos pronto.');
+    onSuccess?.();
   };
 
   const formContent = (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="nombre">Nombre completo</Label>
-          <Input
-            id="nombre"
-            value={formData.nombre}
-            onChange={(e) => handleChange('nombre', e.target.value)}
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="identificacion">Número de identificación</Label>
-          <Input
-            id="identificacion"
-            value={formData.identificacion}
-            onChange={(e) => handleChange('identificacion', e.target.value)}
-            required
-          />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="nombre">Nombre completo</Label>
+        <Input
+          id="nombre"
+          value={formData.nombre}
+          onChange={(e) => handleChange('nombre', e.target.value)}
+          required
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -117,19 +90,6 @@ export function FormularioTramite({ embedded = false }: { embedded?: boolean }) 
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Correo electrónico</Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleChange('email', e.target.value)}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
           <Label htmlFor="ciudad">Ciudad</Label>
           <Input
             id="ciudad"
@@ -138,83 +98,76 @@ export function FormularioTramite({ embedded = false }: { embedded?: boolean }) 
             required
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="tipoVehiculo">Tipo de vehículo</Label>
-          <SafeSelect fallback={<div className="text-red-500">Error cargando selector</div>}>
-            <Select value={formData.tipoVehiculo} onValueChange={handleSelectChange('tipoVehiculo')}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione tipo de vehículo" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="moto">Moto</SelectItem>
-                <SelectItem value="carro">Carro</SelectItem>
-              </SelectContent>
-            </Select>
-          </SafeSelect>
-        </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="tipoTramite">Tipo de trámite</Label>
+        <Label htmlFor="tipoVehiculo">Tipo de vehículo</Label>
         <SafeSelect fallback={<div className="text-red-500">Error cargando selector</div>}>
-          <Select value={formData.tipoTramite} onValueChange={handleSelectChange('tipoTramite')}>
+          <Select value={formData.tipoVehiculo} onValueChange={handleSelectChange('tipoVehiculo')}>
             <SelectTrigger>
-              <SelectValue placeholder="Seleccione tipo de trámite" />
+              <SelectValue placeholder="Seleccione tipo de vehículo" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="traspaso">Traspaso de vehículos</SelectItem>
-              <SelectItem value="soat">SOAT</SelectItem>
-              <SelectItem value="revision">Revisión técnico-mecánica</SelectItem>
-              <SelectItem value="matricula">Matrícula</SelectItem>
-              <SelectItem value="cambio-propiedad">Cambio de propiedad</SelectItem>
-              <SelectItem value="otro">Otros trámites</SelectItem>
+              <SelectItem value="moto">Moto</SelectItem>
+              <SelectItem value="carro">Carro</SelectItem>
+              <SelectItem value="camioneta">Camioneta</SelectItem>
             </SelectContent>
           </Select>
         </SafeSelect>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="comentarios">Comentarios adicionales</Label>
+        <Label htmlFor="comentarios">Comentarios</Label>
         <Textarea
           id="comentarios"
           value={formData.comentarios}
           onChange={(e) => handleChange('comentarios', e.target.value)}
-          placeholder="Ingrese cualquier información adicional..."
+          placeholder="Agrega detalles adicionales sobre tu trámite"
           rows={4}
         />
       </div>
 
-      <Button type="submit" className="w-full">
+      <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+        <div>
+          <p className="text-sm text-slate-500">Trámite seleccionado</p>
+          <p className="font-semibold text-slate-900">{formData.tipoTramite || 'No definido'}</p>
+        </div>
+        <div>
+          <p className="text-sm text-slate-500">Precio cotizado</p>
+          <p className="font-semibold text-slate-900">{formData.precio || 'No definido'}</p>
+        </div>
+      </div>
+
+      <input type="hidden" name="tipoTramite" value={formData.tipoTramite} />
+      <input type="hidden" name="precio" value={formData.precio} />
+
+      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
         Enviar solicitud
       </Button>
     </form>
   );
 
   return embedded ? (
-    <Card>
+    <Card className="border border-slate-200 shadow-sm">
       <CardHeader>
-        <CardTitle className="text-2xl text-center">Solicitar Trámite Vehicular</CardTitle>
+        <CardTitle className="text-2xl text-center">Solicitar Trámite</CardTitle>
         <CardDescription className="text-center">
-          Complete el formulario para solicitar su trámite vehicular
+          Completa el formulario. El trámite y el precio están cargados automáticamente.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        {formContent}
-      </CardContent>
+      <CardContent>{formContent}</CardContent>
     </Card>
   ) : (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
-        <Card>
+        <Card className="border border-slate-200 shadow-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Solicitar Trámite Vehicular</CardTitle>
             <CardDescription className="text-center">
-              Complete el formulario para solicitar su trámite vehicular
+              Completa el formulario para solicitar tu trámite.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            {formContent}
-          </CardContent>
+          <CardContent>{formContent}</CardContent>
         </Card>
       </div>
     </div>
