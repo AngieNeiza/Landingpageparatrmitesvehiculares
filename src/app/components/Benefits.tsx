@@ -64,8 +64,8 @@ export function Benefits() {
             return (
               <SwiperSlide key={index} style={{ width: 'auto' }}>
                 <div className="bg-white/10 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 group h-full min-w-[300px] md:min-w-[350px]">
-                  <div className="bg-accent w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-7 h-7 text-accent" />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: '#1E6F8C' }}>
+                    <Icon className="w-6 h-6" style={{ color: '#000000' }} />
                   </div>
                   <h3 className="text-xl mb-3">
                     {benefit.title}
