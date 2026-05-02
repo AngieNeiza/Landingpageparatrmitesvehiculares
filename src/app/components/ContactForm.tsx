@@ -1,4 +1,5 @@
 import { FormularioTramite } from './FormularioTramite';
+import { FormularioErrorBoundary } from './FormularioErrorBoundary';
 
 export function ContactForm() {
   return (
@@ -14,7 +15,10 @@ export function ContactForm() {
             </p>
           </div>
 
-          <FormularioTramite embedded={true} />
+          {/* Error boundary para proteger el formulario */}
+          <FormularioErrorBoundary>
+            <FormularioTramite embedded={true} />
+          </FormularioErrorBoundary>
 
           <div className="mt-8 text-center text-gray-600">
             <p>O contáctanos directamente:</p>

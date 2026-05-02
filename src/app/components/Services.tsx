@@ -61,8 +61,8 @@ export function Services() {
                 key={index}
                 className="bg-white p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-secondary group"
               >
-                <div className="bg-secondary/20 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary transition-colors duration-300">
-                  <Icon className="w-7 h-7 text-secondary group-hover:text-white transition-colors duration-300" />
+                <div className="bg-secondary/20 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary transition-all duration-300">
+                  <Icon className="w-7 h-7 text-secondary group-hover:text-white transition-all duration-300" />
                 </div>
                 <h3 className="text-xl text-blue-950 mb-3">
                   {service.title}

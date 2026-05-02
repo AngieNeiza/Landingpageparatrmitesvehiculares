@@ -3,6 +3,7 @@ import { ListaTramites, Tramite } from './ListaTramites';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { FormularioTramite } from './FormularioTramite';
+import { FormularioErrorBoundary } from './FormularioErrorBoundary';
 
 export function Cotizador() {
   const [selectedTramite, setSelectedTramite] = useState<Tramite | null>(null);
@@ -96,12 +97,14 @@ export function Cotizador() {
 
             {showForm && selectedTramite && (
               <div ref={formRef} className="space-y-4">
-                <FormularioTramite
-                  embedded={true}
-                  initialTramite={selectedTramite.nombre}
-                  initialPrecio={selectedTramite.precioRango}
-                  onSuccess={() => setSubmitted(true)}
-                />
+                <FormularioErrorBoundary>
+                  <FormularioTramite
+                    embedded={true}
+                    initialTramite={selectedTramite.nombre}
+                    initialPrecio={selectedTramite.precioRango}
+                    onSuccess={() => setSubmitted(true)}
+                  />
+                </FormularioErrorBoundary>
                 {submitted && (
                   <Card className="border border-green-200 bg-green-50 text-green-900 p-5">
                     <div className="text-lg font-semibold">¡Solicitud enviada!</div>

@@ -8,6 +8,19 @@ import { Textarea } from './ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { ArrowLeft, CheckCircle, Clock, Users, FileText, Shield, Car } from 'lucide-react';
 
+function safeString(value: string | null | undefined) {
+  return value ?? '';
+}
+
+function SafeSelect({ children, fallback }: { children: React.ReactNode; fallback: React.ReactNode }) {
+  try {
+    return <>{children}</>;
+  } catch (error) {
+    console.error('Select component error:', error);
+    return <>{fallback}</>;
+  }
+}
+
 // Datos de servicios
 const serviceData = {
   'traspaso-vehiculos': {
@@ -134,6 +147,14 @@ export function ServicioDetalle() {
     comentarios: ''
   });
 
+  const handleChange = (field: keyof typeof formData, value: string | null | undefined) => {
+    setFormData(prev => ({ ...prev, [field]: safeString(value) }));
+  };
+
+  const handleSelectChange = (field: keyof typeof formData) => (value: string | undefined) => {
+    handleChange(field, value);
+  };
+
   const service = servicio ? serviceData[servicio as keyof typeof serviceData] : null;
 
   useEffect(() => {
@@ -155,13 +176,6 @@ export function ServicioDetalle() {
 
   const Icon = service.icon;
 
-  const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSelectChange = (field: string) => (value: string) => {
-    handleChange(field, value);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -390,33 +404,37 @@ export function ServicioDetalle() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="tipoVehiculo">Tipo de vehículo</Label>
-                      <Select value={formData.tipoVehiculo} onValueChange={handleSelectChange('tipoVehiculo')}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione tipo de vehículo" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="moto">Moto</SelectItem>
-                          <SelectItem value="carro">Carro</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <SafeSelect fallback={<div className="text-red-500">Error cargando selector</div>}>
+                        <Select value={safeString(formData.tipoVehiculo)} onValueChange={handleSelectChange('tipoVehiculo')}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seleccione tipo de vehículo" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="moto">Moto</SelectItem>
+                            <SelectItem value="carro">Carro</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </SafeSelect>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="tipoTramite">Tipo de trámite</Label>
-                    <Select value={formData.tipoTramite} onValueChange={handleSelectChange('tipoTramite')}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccione tipo de trámite" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="traspaso-vehiculos">Traspaso de vehículos</SelectItem>
-                        <SelectItem value="soat">SOAT</SelectItem>
-                        <SelectItem value="revision-tecnico-mecanica">Revisión técnico-mecánica</SelectItem>
-                        <SelectItem value="matricula">Matrícula</SelectItem>
-                        <SelectItem value="cambio-propiedad">Cambio de propiedad</SelectItem>
-                        <SelectItem value="otros">Otros trámites</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SafeSelect fallback={<div className="text-red-500">Error cargando selector</div>}>
+                      <Select value={safeString(formData.tipoTramite)} onValueChange={handleSelectChange('tipoTramite')}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccione tipo de trámite" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="traspaso-vehiculos">Traspaso de vehículos</SelectItem>
+                          <SelectItem value="soat">SOAT</SelectItem>
+                          <SelectItem value="revision-tecnico-mecanica">Revisión técnico-mecánica</SelectItem>
+                          <SelectItem value="matricula">Matrícula</SelectItem>
+                          <SelectItem value="cambio-propiedad">Cambio de propiedad</SelectItem>
+                          <SelectItem value="otros">Otros trámites</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </SafeSelect>
                   </div>
 
                   <div className="space-y-2">

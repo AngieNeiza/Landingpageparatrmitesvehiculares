@@ -219,3 +219,35 @@
     line-height: 1.5;
   }
 }
+
+/* Services Card Icon Contrast - Dynamic Color System */
+/* Ensures icon color changes based on background for perfect contrast */
+
+/* Normal state: Light background with dark icon */
+.group > div[class*="bg-secondary/20"] {
+  background-color: rgba(30, 111, 140, 0.2);
+}
+
+.group > div[class*="bg-secondary/20"] svg {
+  color: var(--secondary);
+  transition: color 300ms ease-in-out;
+}
+
+/* Hover state: Dark background with light icon */
+.group:hover > div[class*="bg-secondary/20"] {
+  background-color: var(--secondary);
+  transition: background-color 300ms ease-in-out;
+}
+
+.group:hover > div[class*="bg-secondary/20"] svg {
+  color: #ffffff;
+}
+
+/* Ensure the transition is smooth and continuous */
+.group > div[class*="rounded-xl"] {
+  transition: background-color 300ms ease-in-out;
+}
+
+.group > div[class*="rounded-xl"] svg {
+  transition: color 300ms ease-in-out;
+}
